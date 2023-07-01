@@ -54,4 +54,4 @@ jobs:
 
       
       - name: Deploy CDK stack
-        run: cdk deploy --require-approval never ${{ env.CDK_STACK_NAME }}
+        run: cdk deploy --require-approval never
