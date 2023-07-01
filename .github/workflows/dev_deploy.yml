@@ -1,60 +1,45 @@
-name : deploy to AWS 
-on : 
-  push: 
-    branches: 
-      - main 
+name: deploy to AWS
 
-jobs: 
-    deploy: 
-      runs-on: ubuntu-latest
-      env: 
-        AWS_REGION: 'us-east-1' 
-        CDK_STACK_NAME: 'my-cdk-stack'
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: 'us-east-1'
+      CDK_STACK_NAME: 'my-cdk-stack'
+    steps:
+      - name: checkout the code
+        uses: actions/checkout@v2
         
-   
+      - name: set up go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.x
 
-      steps: 
-        - name: checkout the code
-          uses: actions/checkout@v2
+      - name: install dependencies
+        run: go mod download
 
-        
-        - name : set up go 
-          uses : actions/setup-go@v2
-          with : 
-            go-version: 1.x
+      - name: build app
+        run: go build -o main
 
-        - name: install dependencies 
-          run : go mod download 
+      - name: login to AWS ECR
+        uses: aws-actions/amazon-ecr-login@v1
 
-        = name : build app 
-          run : go build -o main 
+      - name: Build and push Docker image
+        run: |
+          docker build -t my-registry/my-repo:latest .
+          docker push my-registry/my-repo:latest
 
-        - name : login to AWS ECR 
-          uses: aws-actions/amazon-ecr-login@v1
-
-        - name: Build and push Docker image
-          run: |
-            docker build -t my-registry/my-repo:latest .
-            docker push my-registry/my-repo:latest
-        - name : deploy cdk stack 
-          uses: aws-actions/aws-cdk@v1
-          with:
+      - name: deploy cdk stack name test
+        uses: aws-actions/aws-cdk@v1
+        with:
           args: deploy --require-approval never --app 'npx ts-node bin/your-cdk-stack.js'
-          env:
-            AWS_REGION: ${{ env.AWS_REGION }}
-            CDK_DEPLOY_ACCOUNT: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            CDK_DEPLOY_REGION: ${{ env.AWS_REGION }}
-            CDK_STACK_NAME: ${{ env.CDK_STACK_NAME }}
-
-
-
-
-            
-
-
-
-
-
-
-     
-
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
+          CDK_DEPLOY_ACCOUNT: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          CDK_DEPLOY_REGION: ${{ env.AWS_REGION }}
+          CDK_STACK_NAME: ${{ env.CDK_STACK_NAME }}
