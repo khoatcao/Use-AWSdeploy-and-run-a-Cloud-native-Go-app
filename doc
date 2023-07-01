@@ -1,0 +1,5 @@
+1)Install AWS CDK: Run npm install -g aws-cdk to install the AWS CDK globally.
+   npm install -g aws-cdk
+2) Create a new directory for your CDK project, navigate to it in your terminal, and run cdk init app --language typescript to create a new CDK project using TypeScript.
+
+    cdk init app --language typescript
