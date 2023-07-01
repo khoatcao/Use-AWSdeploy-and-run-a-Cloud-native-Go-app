@@ -56,4 +56,4 @@ jobs:
       - name: Deploy CDK stack
         run: |
           npm install -g aws-cdk
-          cdk deploy --require-approval never ${{ env.CDK_STACK_NAME }}
+          cdk deploy --require-approval never --app 'node bin/index.js' ${{ env.CDK_STACK_NAME }}
