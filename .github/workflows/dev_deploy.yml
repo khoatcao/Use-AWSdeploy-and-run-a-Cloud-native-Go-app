@@ -32,8 +32,8 @@ jobs:
       - name: build app
         run: go build -o main
 
-      - name: login to AWS ECR
-        uses: aws-actions/amazon-ecr-login@v1
+      # - name: login to AWS ECR
+      #   uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build and push Docker image
         run: |
