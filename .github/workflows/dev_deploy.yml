@@ -19,6 +19,13 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.x
+      
+      - name: Install AWS CLI
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+
 
       - name: install dependencies
         run: go mod download
@@ -34,12 +41,12 @@ jobs:
           docker build -t my-registry/my-repo:latest .
           docker push my-registry/my-repo:latest
 
-      - name: deploy cdk stack name test
-        uses: aws-actions/aws-cdk@v1
-        with:
-          args: deploy --require-approval never --app 'npx ts-node bin/your-cdk-stack.js'
+      - name: configure env         
         env:
           AWS_REGION: ${{ env.AWS_REGION }}
           CDK_DEPLOY_ACCOUNT: ${{ secrets.AWS_ACCESS_KEY_ID }}
           CDK_DEPLOY_REGION: ${{ env.AWS_REGION }}
           CDK_STACK_NAME: ${{ env.CDK_STACK_NAME }}
+      
+      - name: Deploy CDK stack
+        run: cdk deploy --require-approval never ${{ env.CDK_STACK_NAME }}
