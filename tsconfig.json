@@ -23,7 +23,11 @@
     "typeRoots": [
       "./node_modules/@types"
     ],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "aws-cdk-lib": ["node_modules/aws-cdk-lib"]
+    }
   },
   "exclude": [
     "node_modules",
