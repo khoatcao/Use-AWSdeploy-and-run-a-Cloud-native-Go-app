@@ -56,5 +56,5 @@ jobs:
       - name: Install AWS CDK
         run: npm install -g aws-cdk
 
-      - name: Deploy CDK Stack test
+      - name: Deploy CDK Stack
         run: npx aws-cdk deploy --all --verbose --require-approval never --outputs-file ./cdk.out.json
