@@ -2,7 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
-import {Config} from './config'; 
+// import {Config} from './config'; 
 import * as apprunner from '@aws-cdk/aws-apprunner-alpha';  
 import * as assets from 'aws-cdk-lib/aws-ecr-assets';
 

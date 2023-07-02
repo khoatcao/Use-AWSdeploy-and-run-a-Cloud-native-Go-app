@@ -2,7 +2,7 @@
   "name": "deploy",
   "version": "0.1.0",
   "bin": {
-    "deploy": "deploy/bin/deploy.ts"
+    "deploy": "deploy/bin/deploy.js"
   },
   "scripts": {
     "build": "tsc",
@@ -22,8 +22,8 @@
   "dependencies": {
     "@aws-cdk/aws-apprunner-alpha": "^2.86.0-alpha.0",
     "@aws-cdk/aws-dynamodb": "^1.204.0",
-    "aws-cdk-lib": "2.86.0",
-    "constructs": "^10.0.0",
+    "aws-cdk-lib": "^2.86.0",
+    "constructs": "^10.2.66",
     "dotenv": "^16.3.1",
     "source-map-support": "^0.5.21"
   }
